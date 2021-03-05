@@ -4,15 +4,17 @@
   "description": "Sistema de compraventa adsi",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app"
   },
   "type": "module",
   "author": "Ferley Arias",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.18"
+    "mongoose": "^5.11.18",
+    "mongoose-bcrypt": "^1.9.0"
   }
 }

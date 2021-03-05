@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import mongoConnection from "../database/config.js";
 import category from "../routes/category.js"
+import user from "../routes/user.js";
+
 
 class Server {
   constructor() {
@@ -17,7 +19,8 @@ class Server {
     this.routes();
   }
   routes() {
-    this.app.use("/api/categoria", category)
+    this.app.use("/api/category", category)
+    this.app.use("/api/user", user);
   }
 
   async myConnection() {
