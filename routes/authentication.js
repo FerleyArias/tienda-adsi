@@ -3,6 +3,6 @@ import authentication from "../controllers/authentication.js"
 
 const router = Router()
 
-router.put('/login', authentication.login)
+router.post('/login', authentication.login)
 
 export default router
