@@ -1,20 +1,71 @@
 import { Router } from "express";
+import { check } from "express-validator"
+
+import validateInputs from "../middlewares/validate-inputs.js"
 import category from '../controllers/category.js'
 
 const router = Router()
 
-router.get("/", category.categoryGet)
+router.get(
+  "/",
+  [
+    validateInputs
+  ], 
+  category.categoryGet
+)
 
-router.get("/:id", category.categoryById)
+router.get(
+  "/:id",
+  [
+    check('id', 'No es un ID válido').isMongoId(),
+    validateInputs
+  ],
+  category.categoryById
+)
 
-router.post("/", category.categoryPost)
+router.post(
+  "/",
+  [
+    check('nombre', 'El nombre es obligatorio!').not().isEmpty(),
+    validateInputs
+  ],
+  category.categoryPost
+)
 
-router.put("/", category.categoryModify)
+router.put(
+  "/:id", 
+  [
+    check('id', 'No es un ID válido').isMongoId(),
+    validateInputs
+  ],
+  category.categoryModify
+)
 
-router.put("/enable/:id", category.stateEnable)
+router.put(
+  "/enable/:id",
+  [
+    check('id', 'No es un ID válido').isMongoId(),
+    validateInputs
+  ], 
+  category.stateEnable
+)
 
-router.put("/disable/:id", category.stateDisable)
+router.put(
+  "/disable/:id",
+  [
+    check('id', 'No es un ID válido').isMongoId(),
+    validateInputs
+  ], 
+  category.stateDisable
+)
 
-router.delete("/:id", category.categoryDelete)
+router.delete(
+  "/:id",
+  [
+    check('id', 'No es un ID válido').isMongoId(),
+    validateInputs
+  ], 
+  category.categoryDelete
+)
 
 export default router
