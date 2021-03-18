@@ -1,7 +1,8 @@
 import {Router} from 'express'
 import { check } from 'express-validator'
 
-import validatorInputs from '../middlewares/validate-inputs.js'
+import validateInputs from '../middlewares/validate-inputs.js'
+import validateJWT from '../middlewares/validate-JWT.js'
 import user from '../controllers/user.js'
 
 const router = Router()
@@ -9,7 +10,8 @@ const router = Router()
 router.get(
   "/",
   [
-    validatorInputs
+    validateJWT.validate,
+    validateInputs
   ], 
   user.userGet
 )
@@ -17,8 +19,9 @@ router.get(
 router.get(
   "/:id",
   [
+    validateJWT.validate,
     check('id', 'No es un ID válido').isMongoId(),
-    validatorInputs
+    validateInputs
   ],
   user.userGetById
 )
@@ -26,8 +29,9 @@ router.get(
 router.post(
   "/",
   [
+    validateJWT.validate,
     check('id', 'No es un ID válido').isMongoId(),
-    validatorInputs
+    validateInputs
   ],
   user.userPost
 )
@@ -35,8 +39,9 @@ router.post(
 router.put(
   "/:id",
   [
+    validateJWT.validate,
     check('id', 'No es un ID válido').isMongoId(),
-    validatorInputs
+    validateInputs
   ],
   user.userModify
 )
@@ -44,8 +49,9 @@ router.put(
 router.put(
   "/enable/:id",
   [
+    validateJWT.validate,
     check('id', 'No es un ID válido').isMongoId(),
-    validatorInputs
+    validateInputs
   ], 
   user.stateEnable
 )
@@ -53,8 +59,9 @@ router.put(
 router.put(
   "/disable/:id",
   [
+    validateJWT.validate,
     check('id', 'No es un ID válido').isMongoId(),
-    validatorInputs
+    validateInputs
   ],
   user.stateDisable
 )

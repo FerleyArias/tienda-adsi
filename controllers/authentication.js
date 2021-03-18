@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
+import validateJWT from "../middlewares/validar-jwt.js"
 
 const authentication = {
   login: async (req, res) => {
@@ -17,8 +18,12 @@ const authentication = {
           msg: 'usuario o contraseña inconrrectos'
         })
       }
+
+      const token = await validateJWT.generate(usuario.id);
+
       res.json({
-        user
+        user,
+        token
       })
     } catch (error) {
       console.log(error);
