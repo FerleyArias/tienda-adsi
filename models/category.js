@@ -7,4 +7,4 @@ const CategorySchema=mongoose.Schema({
   createdAt:{type:Date, default:Date.now}
 })
 
-export default mongoose.model('Category', CategorySchema)
+export default mongoose.model('categories', CategorySchema)

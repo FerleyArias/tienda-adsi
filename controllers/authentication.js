@@ -1,6 +1,6 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
-import validateJWT from "../middlewares/validar-jwt.js"
+import validateJWT from "../middlewares/validate-JWT.js"
 
 const authentication = {
   login: async (req, res) => {
