@@ -32,8 +32,8 @@ router.post(
   "/",
   [
     validateJWT.validate,
-    check('nombre', 'El nombre es obligatorio!').not().isEmpty(),
-    check('nombre').custom(categoryHelpers.existCategoryByName),
+    check('name', 'El nombre es obligatorio!').not().isEmpty(),
+    check('name').custom(categoryHelpers.existCategoryByName),
 
     validateInputs
   ],
@@ -46,7 +46,7 @@ router.put(
     validateJWT.validate,
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom(categoryHelpers.existCategoryById),
-    check('nombre').custom(categoryHelpers.existCategoryByName),
+    check('name').custom(categoryHelpers.existCategoryByName),
     validateInputs
   ],
   category.categoryModify

@@ -1,56 +1,51 @@
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import User from "../models/user.js";
 
-const validatorJWT = {
+const validateJWT = {
   generate: (id) => {
-    return new Promise((resolve,reject) => {
-      const payload = {uid:id}
+    return new Promise((resolve, reject) => {
+      const payload = { uid: id };
       jwt.sign(
         payload,
-        process.env.SECRETPRIVATEKEY,
+        process.env.SECRETKEY,
         {
-          expiresIn: '4h'
+          expiresIn: "24h",
         },
-        (err,token)=> {
-          if(err) {
-            reject('No se pudo generar el token')
+        (err, token) => {
+          if (err) {
+            reject("No se pudo generar el token");
           } else {
-            reject(token)
+            resolve(token);
           }
         }
-      )
-    })
+      );
+    });
   },
-  validate: async (req, res) => {
-    const token = req.header('token')
-    if(!token) {
+  validate: async (req, res, next) => {
+    const token = req.header("token");
+  
+    if (!token) {
       return res.status(401).json({
-        msg: 'No existe toke en la peticion'
-      })
+        msg: "No existe token en la petición",
+      });
     }
-
+  
     try {
-      const {uid}=jwt.verify(token,process.env.SECRETORPRIVATEKEY)
-
-      const usuario=await Usuario.findById({_id:uid})
-
-      if( !usuario  || usuario.estado ==0) {
+      const { uid } = jwt.verify(token, process.env.SECRETKEY);
+      const user = await User.findById(uid);
+      if (!user || user.state === 0) {
         return res.status(401).json({
-            msg: 'Token no invalido'
-        })
+          msg: "Token no válido",
+        });
       }
-      
-      req.usuario=usuario;
-        
+      req.user = user;
       next();
-
     } catch (error) {
-      console.log(error);
-        res.status(401).json({
-            msg:'Token invalido'
-        })
+      res.status(401).json({
+        msg: "Token no valido",
+      });
     }
   }
-
 }
 
-export default validatorJWT
+export default validateJWT

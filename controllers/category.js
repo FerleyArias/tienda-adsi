@@ -3,10 +3,10 @@ import Category from '../models/category.js'
 const category = {
   categoryGet: async (req, res) => {
     const {value} = req.query
-    const category = await category
+    const category = await Category
       .find({
         $or:[
-          {nombre:new RegExp(value, "i")},
+          {name:new RegExp(value, "i")},
           {description:new RegExp(value, "i")}
         ]
       })

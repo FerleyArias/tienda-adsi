@@ -4,6 +4,7 @@ import { check } from "express-validator";
 import validateJWT from "../middlewares/validate-JWT.js";
 import validateInputs from "../middlewares/validate-inputs.js";
 import itemHelpers from "../db-helpers/item.js";
+import categoryHelpers from "../db-helpers/category.js"
 
 const router = Router();
 
@@ -23,13 +24,14 @@ router.post(
   [
     validateJWT.validate,
     check("category", "Categoria es requerida").not().isEmpty(),
+    check("category", "Categoria es requerida").isMongoId(),
     check("code", "Codigo es requerido").not().isEmpty(),
     check("name", "Nombre es requerido").not().isEmpty(),
     check("description", "Descripción es requerida").not().isEmpty(),
     check("price", "Precio es requerido").not().isEmpty(),
     check("stock", "Stock es requerido").not().isEmpty(),
     check("name").custom(itemHelpers.byName),
-    check("code").custom(itemHelpers.byCode),
+    check("category").custom(categoryHelpers.byId),
     validateInputs,
   ],
   item.add

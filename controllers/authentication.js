@@ -19,7 +19,7 @@ const authentication = {
         })
       }
 
-      const token = await validateJWT.generate(usuario.id);
+      const token = await validateJWT.generate(user.id);
 
       res.json({
         user,
