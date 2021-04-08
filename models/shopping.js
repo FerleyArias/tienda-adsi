@@ -15,7 +15,7 @@ const shoppingSchema = mongoose.Schema({
   details: [
     {
       _id: { type: String, required: true },
-      article: { type: String, required: true },
+      item: { type: String, required: true },
       quantity: { type: Number, required: true },
       price: { type: Number, required: true },
     },

@@ -7,7 +7,7 @@ const validateJWT = {
       const payload = { uid: id };
       jwt.sign(
         payload,
-        process.env.SECRETKEY,
+        process.env.SECRETPRIVATEKEY,
         {
           expiresIn: "24h",
         },
@@ -31,7 +31,7 @@ const validateJWT = {
     }
   
     try {
-      const { uid } = jwt.verify(token, process.env.SECRETKEY);
+      const { uid } = jwt.verify(token, process.env.SECRETPRIVATEKEY);
       const user = await User.findById(uid);
       if (!user || user.state === 0) {
         return res.status(401).json({

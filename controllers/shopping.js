@@ -38,10 +38,14 @@ const shopping = {
       typeProof,
       serieProof,
       numProof,
-      total,
-      tax,
       details,
     } = req.body;
+
+    //total
+    const total = details.reduce((acc, item) => acc + (item.quantity * item.price), 0)
+    //tax
+    const tax = total * 0.19
+
     const shopping = new Shopping({
       user,
       person,
@@ -52,11 +56,6 @@ const shopping = {
       tax,
       details,
     });
-
-    //total
-    shopping.total = shopping.details.reduce((acc, item) => acc + (item.quantity * item.price), 0)
-    //tax
-    shopping.tax = shopping.total * 0.19
     await shopping.save();
     details.map((item) => Stock.disminuirStock(item._id,item.quantity))
     res.status(200).json({

@@ -7,7 +7,7 @@ const helpers = {
   },
   userEmail: async (email) => {
     const exist = await User.findOne({email})
-    if (!exist) throw new Error('El email ya se encuentra en uso')
+    if (exist) throw new Error('El email ya se encuentra en uso')
   }
 };
 

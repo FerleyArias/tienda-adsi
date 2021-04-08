@@ -38,10 +38,14 @@ const sale = {
       typeProof,
       serieProof,
       numProof,
-      total,
-      tax,
       details,
     } = req.body;
+
+    //total
+    const total = details.reduce((acc, article) => acc + ((article.quantity * article.price) - article.discount), 0) 
+    //tax
+    const tax = total * 0.19
+
     const sale = new Sale({
       user,
       person,
@@ -53,13 +57,6 @@ const sale = {
       details,
     });
 
-    //total
-    sale.total = sale.details.reduce((acc, item) => acc + (item.quantity * item.price), 0)
-    //tax
-    sale.tax = sale.total * 0.19
-    if(details.discount) {
-      sale.total = sale.total - sale.details.discount
-    }
     await sale.save();
     details.map((item) => Stock.disminuirStock(item._id,item.quantity))
     res.status(200).json({
